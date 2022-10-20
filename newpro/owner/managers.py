@@ -1,6 +1,6 @@
-
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext as _
+
 
 class CustomUserManager(BaseUserManager):
     """
@@ -10,16 +10,15 @@ class CustomUserManager(BaseUserManager):
 
     def create_user(self, username, email, password, **extra_fields):
         if not email and username:
-            raise ValueError(_('Users must have a username'))
-            raise ValueError(_('Users must have an email address'))
+            raise ValueError(_('Users must have a username and an email address'))
         username = self.normalize_username(username)
-        email = self.normalize_email(email)
-        user = self.model(username=username, email=email, **extra_fields)
+        email1 = self.normalize_email(email)
+        user = self.model(username=username, email=email1, **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, username, password, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -28,5 +27,4 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
-        return self.create_user(username, password, **extra_fields)
-
+        return self.create_user(email, password, **extra_fields)
