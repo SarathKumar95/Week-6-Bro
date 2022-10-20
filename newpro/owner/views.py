@@ -57,3 +57,21 @@ def owner(request):
     user = CustomUser.objects.all()
     context = {'user': user}
     return render(request, 'owner/dashboard.html',context)
+
+
+def create_user(request):
+    form = CustomUserCreationForm
+    context = {'form': form}
+
+    if request.method == 'POST':
+
+        form = CustomUserCreationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+        else:
+            print(form.errors)
+
+    return render(request, 'owner/create.html', context)
+
