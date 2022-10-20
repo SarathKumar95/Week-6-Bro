@@ -8,4 +8,6 @@ urlpatterns = [
     path('out', views.out, name='out'),
     path('owner', views.owner, name='owner'),
     path('create', views.create_user, name='create'),
+    # path('update', views.update_user, name='update'),
+    path('delete/<int:id>', views.delete_user, name='delete'),
 ]

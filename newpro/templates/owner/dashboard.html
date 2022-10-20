@@ -16,6 +16,17 @@
     <section>
 
 
+        <a href="{% url 'create'%}">Add User</a>
+
+        <div class="messages">
+            {% for message in messages %}
+
+                {{message}}
+
+            {% endfor %}
+
+        </div>
+
         <table>
 
             <tr>
@@ -33,7 +44,7 @@
                 <td>{{item.username}}</td>
                 <td>{{item.email}}</td>
                 <td><a href="">Edit</a></td>
-                <td><a href="">Delete</a></td>
+                <td><a href="{% url 'delete' item.id %}">Delete</a></td>
 
 
             </tr>

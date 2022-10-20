@@ -69,9 +69,20 @@ def create_user(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "The user has been created.")
+            return redirect('owner')
 
         else:
             print(form.errors)
 
     return render(request, 'owner/create.html', context)
+
+
+def delete_user(request, id):
+    user = CustomUser.objects.get(id=id)
+    user.delete()
+    return redirect('owner')
+
+
+
 
