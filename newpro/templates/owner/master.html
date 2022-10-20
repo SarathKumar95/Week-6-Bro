@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Master Login</title>
+</head>
+<body>
+
+<div class="messages">
+
+    {% for message in messages %}
+
+        {{message}}
+
+
+    {% endfor %}
+
+
+</div>
+
+<form action="" method="POST">
+
+    {% csrf_token %}
+
+  <input type="text" name="uname"  placeholder="Enter Admin Username">
+  <input type="password" name="pwd" placeholder="Enter password">
+  <input type="submit" value="Login">
+
+
+</form>
+
+</body>
+</html>

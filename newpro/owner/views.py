@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -56,7 +56,7 @@ def out(request):
 def owner(request):
     user = CustomUser.objects.all()
     context = {'user': user}
-    return render(request, 'owner/dashboard.html',context)
+    return render(request, 'owner/dashboard.html', context)
 
 
 def create_user(request):
@@ -84,5 +84,18 @@ def delete_user(request, id):
     return redirect('owner')
 
 
+def master(request):
 
+    if request.method == "POST":
+        username = request.POST['uname']
+        password = request.POST['pwd']
 
+        user = authenticate(username=username, password=password)
+
+        if user is not None and user.is_superuser:
+            return redirect('owner')
+
+        else:
+            messages.info(request, "You don't seem to be an admin.")
+
+    return render(request, 'owner/master.html')
