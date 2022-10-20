@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from owner.forms import CustomUserCreationForm
+from owner.models import CustomUser
 
 
 # Create your views here.
@@ -48,4 +49,11 @@ def home(request):
 
 def out(request):
     logout(request)
+    messages.success(request, "Thank you for spending time with us.")
     return redirect('signin')
+
+
+def owner(request):
+    user = CustomUser.objects.all()
+    context = {'user': user}
+    return render(request, 'owner/dashboard.html',context)

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Super Dashboard</title>
+</head>
+<body>
+
+    <header>
+
+        <h1>Place for navbar</h1>
+
+
+    </header>
+
+    <section>
+
+
+        <table>
+
+            <tr>
+
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+
+            </tr>
+
+            {% for item in user %}
+                {% if item.is_staff == False %}
+            <tr>
+
+                <td>{{item.username}}</td>
+                <td>{{item.email}}</td>
+                <td><a href="">Edit</a></td>
+                <td><a href="">Delete</a></td>
+
+
+            </tr>
+
+                {% endif %}
+            {% endfor %}
+
+        </table>
+
+
+
+    </section>
+
+
+</body>
+</html>

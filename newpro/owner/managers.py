@@ -3,10 +3,6 @@ from django.utils.translation import gettext as _
 
 
 class CustomUserManager(BaseUserManager):
-    """
-    Custom user model manager where email is the unique identifier
-    for authentication instead of usernames.
-    """
 
     def create_user(self, username, email, password, **extra_fields):
         if not email and username:
