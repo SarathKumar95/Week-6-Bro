@@ -70,7 +70,7 @@ def out(request):
     messages.success(request, "Thank you for spending time with us.")
     return redirect('signin')
 
-
+@cache_control(no_cache=True,no_store=True)
 def owner(request):
     if 'superuser' in request.session:
         user = CustomUser.objects.all()
@@ -112,7 +112,7 @@ def delete_user(request, id):
 
     return redirect('master')
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def master(request):
     if 'superuser' in request.session:
         return redirect('owner')
