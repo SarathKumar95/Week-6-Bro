@@ -65,7 +65,7 @@
                     <td>{{item.username}}</td>
                     <td>{{item.email}}</td>
                     <td>
-                        <a class="me-5" href="" style="text-decoration:none; color:black;"><i class="fa-solid fa-pen me-2" style="color:blue;"></i>Edit</a>
+                        <a class="me-5" href="{% url 'update' item.id %}" style="text-decoration:none; color:black;"><i class="fa-solid fa-pen me-2" style="color:blue;"></i>Edit</a>
                         <a class="me-5" href="{% url 'delete' item.id %}" style="text-decoration:none; color:black;"><i class="fa-solid fa-trash me-2" style="color:red;"></i>Delete</a>
                     </td>
 

@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import Template, Context
 
-from owner.forms import CustomUserCreationForm
+from owner.forms import CustomUserCreationForm, CustomUserChangeForm
 from owner.models import CustomUser
 
 
@@ -139,3 +139,16 @@ def search_user(request):
 
     else:
         return redirect(owner)
+
+
+def update_user(request, id):
+    user = CustomUser.objects.get(id=id)
+    form = CustomUserChangeForm(instance=user)
+
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            print("Updated")
+            return redirect('owner')
+    return render(request, 'owner/edit.html', {'form': form})

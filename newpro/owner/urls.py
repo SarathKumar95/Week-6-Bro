@@ -8,10 +8,9 @@ urlpatterns = [
     path('out', views.out, name='out'),
     path('dashboard', views.owner, name='owner'),
     path('create', views.create_user, name='create'),
-    # path('update', views.update_user, name='update'),
+    path('update/<int:id>', views.update_user, name='update'),
     path('delete/<int:id>', views.delete_user, name='delete'),
     path('master', views.master, name='master'),
     path('masterout', views.masterout, name='masterout'),
-    path('search', views.search_user, name='search')
-
+    path('search', views.search_user, name='search'),
 ]
