@@ -1,0 +1,43 @@
+* {
+box-sizing : border-box;
+margin : 0;
+padding : 0;
+
+}
+
+.form-container{
+
+ border:1px solid black;
+ border-radius : 10px;
+ background-color : green;
+ color: white;
+ display:block;
+ margin : 30px auto;
+
+}
+
+.form-container li{
+    color: white;
+}
+
+.form-text{
+
+color : white;
+
+}
+
+.quest a{
+    color: white;
+}
+
+.sign-in{
+
+    border:2px solid black;
+    border-radius:12px;
+    width:400px;
+    height:300px;
+    display:block;
+    margin:150px auto;
+    background-color: #a9b8cf;
+
+}

@@ -71,11 +71,12 @@ def out(request):
 
 
 def owner(request):
-    user = CustomUser.objects.all()
-    context = {'user': user}
-    return render(request, 'owner/dashboard.html', context)
+    if 'superuser' in request.session:
+        user = CustomUser.objects.all()
+        context = {'user': user}
+        return render(request, 'owner/dashboard.html', context)
 
-    # return redirect('/')
+    return redirect('/')
 
 
 def create_user(request):
