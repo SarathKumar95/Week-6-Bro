@@ -11,6 +11,9 @@ from owner.models import CustomUser
 
 
 def signup(request):
+    if 'customer' in request.session:
+        return redirect('home')
+
     form = CustomUserCreationForm
     context = {'form': form}
 
@@ -20,7 +23,7 @@ def signup(request):
         if form.is_valid():
             print('form saved')
             form.save()
-            messages.info(request,"User created.You can log in here.")
+            messages.info(request, "User created.You can log in here.")
             return redirect('signin')
 
         else:
@@ -30,6 +33,9 @@ def signup(request):
 
 
 def signin(request):
+    if 'customer' in request.session:
+        return redirect('home')
+
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -37,6 +43,7 @@ def signin(request):
         user = authenticate(username=username, password=password)
 
         if user is not None:
+            request.session['customer'] = username
             return redirect('home')
 
         elif user is None:
@@ -46,11 +53,15 @@ def signin(request):
 
 
 def home(request):
-    return render(request, 'owner/home.html')
+    if 'customer' in request.session:
+        return render(request, 'owner/home.html')
+
+    return redirect('signin')
 
 
 def out(request):
-    logout(request)
+    if 'customer' in request.session:
+        del request.session['customer']
     messages.success(request, "Thank you for spending time with us.")
     return redirect('signin')
 
@@ -87,7 +98,6 @@ def delete_user(request, id):
 
 
 def master(request):
-
     if request.method == "POST":
         username = request.POST['uname']
         password = request.POST['pwd']
