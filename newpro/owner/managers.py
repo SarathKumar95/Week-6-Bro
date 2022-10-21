@@ -4,12 +4,11 @@ from django.utils.translation import gettext as _
 
 class CustomUserManager(BaseUserManager):
 
-    def create_user(self, username, email, password, **extra_fields):
-        if not email and username:
-            raise ValueError(_('Users must have a username and an email address'))
-        username = self.normalize_username(username)
+    def create_user(self,email, password, **extra_fields):
+        if not email:
+            raise ValueError(_('Users must have  an email address'))
         email1 = self.normalize_email(email)
-        user = self.model(username=username, email=email1, **extra_fields)
+        user = self.model(email=email1, **extra_fields)
         user.set_password(password)
         user.save()
         return user

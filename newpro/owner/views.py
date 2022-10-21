@@ -20,6 +20,8 @@ def signup(request):
         if form.is_valid():
             print('form saved')
             form.save()
+            messages.info(request,"User created.You can log in here.")
+            return redirect('signin')
 
         else:
             print(form.errors)
