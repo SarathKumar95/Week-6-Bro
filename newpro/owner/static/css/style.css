@@ -5,6 +5,12 @@ padding : 0;
 
 }
 
+body {
+
+background : green;
+
+}
+
 .form-container{
 
  border:1px solid black;
@@ -39,5 +45,11 @@ color : white;
     display:block;
     margin:150px auto;
     background-color: #a9b8cf;
+
+}
+
+table{
+
+width:300px;
 
 }

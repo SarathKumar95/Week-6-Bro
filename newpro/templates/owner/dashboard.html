@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Super Dashboard</title>
-</head>
-<body>
+{% extends 'owner/base.html' %}
 
-    <header>
 
-        <h1>Place for navbar</h1>
-        <a href="{% url 'masterout' %}">Logout Admin</a>
+{% block content %}
+
+<header>
 
     </header>
 
     <section>
 
-
-        <a href="{% url 'create'%}">Add User</a>
 
         <div class="messages">
             {% for message in messages %}
@@ -28,37 +19,80 @@
 
         </div>
 
-        <table>
+        <div class="text-center mt-3">
+
+            <h3>Welcome to Owner Panel.</h3>
+
+        </div>
+
+
+
+        <div class="for-table container">
+
+
+
+
+          <form class="d-flex justify-content-end me-1"  method="POST" action="{% url 'search'%}">
+              {% csrf_token %}
+                    <input type="search" placeholder="Enter username to search." name="searched">
+                    <button class="btn btn-sm btn-outline-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+        <table class="table table-bordered table-success table-stripped container">
+
+            <thead class="table-dark">
 
             <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
 
-                <th>Username</th>
-                <th>Email</th>
-                <th>Actions</th>
 
             </tr>
 
-            {% for item in user %}
-                {% if item.is_staff == False %}
-            <tr>
-
-                <td>{{item.username}}</td>
-                <td>{{item.email}}</td>
-                <td><a href="">Edit</a></td>
-                <td><a href="{% url 'delete' item.id %}">Delete</a></td>
 
 
-            </tr>
+            </thead>
 
-                {% endif %}
-            {% endfor %}
+
+            <tbody>
+
+                {% for item in user %}
+                    {% if item.is_staff == False %}
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.username}}</td>
+                    <td>{{item.email}}</td>
+                    <td>
+                        <a class="me-5" href="" style="text-decoration:none; color:black;"><i class="fa-solid fa-pen me-2" style="color:blue;"></i>Edit</a>
+                        <a class="me-5" href="{% url 'delete' item.id %}" style="text-decoration:none; color:black;"><i class="fa-solid fa-trash me-2" style="color:red;"></i>Delete</a>
+                    </td>
+
+
+
+                </tr>
+
+                    {% endif %}
+                {% endfor %}
+
+
+            </tbody>
+
+
 
         </table>
+
+
+
+
+        </div>
+
 
 
 
     </section>
 
 
-</body>
-</html>
+{% endblock %}
+

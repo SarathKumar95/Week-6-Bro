@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Owner Dashboard {% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/1ab0e88673.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-2" href="{% url 'owner' %}"><i class="fa-solid fa-cloud-bolt fa-2x"></i>SuperUser Panel</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav mt-2">
+        <a class="nav-link active" aria-current="page" href="{% url 'owner' %}">Home</a>
+        <a class="nav-link" href="{% url 'create'%}" style="color:white; text-decoration:none;">Add User</a>
+      </div>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <a href="{% url 'masterout' %}" style="color:white; text-decoration:none;"><i class="fa-solid fa-power-off"></i>Logout</a>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <div id="content">
+
+
+    {% block content %}
+
+
+    {% endblock %}
+  </div>
+
+
+</body>
+</html>

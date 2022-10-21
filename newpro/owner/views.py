@@ -129,3 +129,13 @@ def masterout(request):
     if 'superuser' in request.session:
         del request.session['superuser']
         return redirect(master)
+
+
+def search_user(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        user = CustomUser.objects.filter(username__contains=searched)
+        return render(request, 'owner/dashboard.html', {'searched': searched, 'user': user})
+
+    else:
+        return redirect(owner)
