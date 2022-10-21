@@ -101,6 +101,7 @@ def create_user(request):
 def delete_user(request, id):
     user = CustomUser.objects.get(id=id)
     user.delete()
+    messages.success(request,str(user) + " is deleted.")
     return redirect('owner')
 
 
@@ -145,10 +146,13 @@ def update_user(request, id):
     user = CustomUser.objects.get(id=id)
     form = CustomUserChangeForm(instance=user)
 
+    print("Hehe" + str(user))
+
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             print("Updated")
+            messages.success(request,str(user) + " is updated.")
             return redirect('owner')
     return render(request, 'owner/edit.html', {'form': form})
