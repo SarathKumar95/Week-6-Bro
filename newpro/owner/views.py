@@ -1,7 +1,8 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.template import Template, Context
 
 from owner.forms import CustomUserCreationForm
 from owner.models import CustomUser
@@ -44,7 +45,8 @@ def signin(request):
 
         if user is not None:
             request.session['customer'] = username
-            return redirect('home')
+            print('Hey this user is : ' + request.session['customer'])
+            return redirect(home)
 
         elif user is None:
             messages.info(request, "User does not exist. Check credentials")
@@ -54,7 +56,9 @@ def signin(request):
 
 def home(request):
     if 'customer' in request.session:
-        return render(request, 'owner/home.html')
+        temp = {"username": request.session['customer']}
+        context = {'temp': temp}
+        return render(request, 'owner/home.html', context)
 
     return redirect('signin')
 
@@ -70,6 +74,8 @@ def owner(request):
     user = CustomUser.objects.all()
     context = {'user': user}
     return render(request, 'owner/dashboard.html', context)
+
+    # return redirect('/')
 
 
 def create_user(request):
@@ -98,16 +104,27 @@ def delete_user(request, id):
 
 
 def master(request):
-    if request.method == "POST":
-        username = request.POST['uname']
-        password = request.POST['pwd']
+    if 'superuser' in request.session:
+        return redirect('owner')
 
-        user = authenticate(username=username, password=password)
+    if request.method == "POST":
+        admin = request.POST['uname']
+        pword = request.POST['pwd']
+
+        user = authenticate(username=admin, password=pword)
 
         if user is not None and user.is_superuser:
+            request.session['superuser'] = admin
+            print(request.session['superuser'])
             return redirect('owner')
 
         else:
-            messages.info(request, "You don't seem to be an admin.")
+            messages.info(request, "You don't seem to be an admin.Check credentials")
 
     return render(request, 'owner/master.html')
+
+
+def masterout(request):
+    if 'superuser' in request.session:
+        del request.session['superuser']
+        return redirect(master)

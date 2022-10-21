@@ -6,7 +6,15 @@
 </head>
 <body>
 
-<h2>Hey{{user.username}}</h2>
+
+{% for message in messages %}
+
+    {{message}}
+
+{% endfor %}
+
+<h2>You are logged in as {{temp.username}}</h2>
+
 <a href="{% url 'out' %}">SignOut</a>
 
 </body>
