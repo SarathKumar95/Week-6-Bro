@@ -3,19 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/1ab0e88673.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="{% static 'images/star.png' %}" alt="star" style="width:40px;"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        </li>
 
-{% for message in messages %}
+      </ul>
+      <form class="d-flex me-3" role="search">
+            <a href="{% url 'out' %}" style="color:white;"><i class="fa-solid fa-right-from-bracket me-1"></i>SignOut</a>
+      </form>
+    </div>
+  </div>
+</nav>
 
-    {{message}}
-
-{% endfor %}
-
-<h2>You are logged in as {{temp.username}}</h2>
-
-<a href="{% url 'out' %}">SignOut</a>
+<h4>You are logged in as {{temp.username}}</h4>
 
 </body>
 </html>
