@@ -17,8 +17,17 @@
 
     {% csrf_token %}
 
-        <div class="text-center mt-3 mb-5">
+        <div class="text-center mt-3 mb-3">
             <i class="fa-solid fa-user fa-2x" style="color: black;"></i>
+        </div>
+
+        <div class="text-center">
+
+            {% for message in messages  %}
+
+                {{message}}
+
+            {% endfor %}
         </div>
 
         <div class="input-group mb-3">
@@ -38,17 +47,9 @@
 
     </div>
 
-        <div class="text-center">
-
-    {% for message in messages  %}
-
-        {{message}}
-
-    {% endfor %}
-
-
-</div>
-
+    <div class="text-center mt-1 pb-3">
+        <a href="{% url 'user'%}" style="color:black;">New here ?</a>
+    </div>
 
 </form>
 

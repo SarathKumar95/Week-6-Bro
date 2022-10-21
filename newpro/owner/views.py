@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import Template, Context
+from django.views.decorators.cache import cache_control
 
 from owner.forms import CustomUserCreationForm, CustomUserChangeForm
 from owner.models import CustomUser
@@ -32,7 +33,7 @@ def signup(request):
 
     return render(request, 'owner/signup.html', context)
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def signin(request):
     if 'customer' in request.session:
         return redirect('home')
@@ -53,7 +54,7 @@ def signin(request):
 
     return render(request, 'owner/signin.html')
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def home(request):
     if 'customer' in request.session:
         temp = {"username": request.session['customer']}
@@ -76,15 +77,17 @@ def owner(request):
         context = {'user': user}
         return render(request, 'owner/dashboard.html', context)
 
-    return redirect('/')
+    return redirect('master')
 
 
 def create_user(request):
+    if 'superuser' not in request.session:
+        return redirect('master')
+
     form = CustomUserCreationForm
     context = {'form': form}
 
     if request.method == 'POST':
-
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
@@ -98,11 +101,16 @@ def create_user(request):
     return render(request, 'owner/create.html', context)
 
 
+
 def delete_user(request, id):
-    user = CustomUser.objects.get(id=id)
-    user.delete()
-    messages.success(request,str(user) + " is deleted.")
-    return redirect('owner')
+
+    if 'superuser' in request.session:
+        user = CustomUser.objects.get(id=id)
+        user.delete()
+        messages.success(request,str(user) + " is deleted.")
+        return redirect('owner')
+
+    return redirect('master')
 
 
 def master(request):
@@ -143,16 +151,22 @@ def search_user(request):
 
 
 def update_user(request, id):
-    user = CustomUser.objects.get(id=id)
-    form = CustomUserChangeForm(instance=user)
+    if 'superuser' in request.session:
 
-    print("Hehe" + str(user))
 
-    if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            print("Updated")
-            messages.success(request,str(user) + " is updated.")
-            return redirect('owner')
-    return render(request, 'owner/edit.html', {'form': form})
+        user = CustomUser.objects.get(id=id)
+        form = CustomUserChangeForm(instance=user)
+
+        print("Hehe" + str(user))
+
+        if request.method == 'POST':
+            form = CustomUserChangeForm(request.POST, instance=user)
+            if form.is_valid():
+                form.save()
+                print("Updated")
+                messages.success(request,"The user with user id " + str(user.id) + " is updated.")
+                return redirect('owner')
+        return render(request, 'owner/edit.html', {'form': form})
+
+    else:
+        return redirect('master')
