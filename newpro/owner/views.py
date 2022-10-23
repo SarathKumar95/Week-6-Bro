@@ -173,7 +173,7 @@ def update_user(request, id):
                 form.save()
                 print("Updated")
 
-                messages.info(request,'User with user id ' + str(user.id) + " has been updated.")
+                messages.info(request,'User with user id ' + str(user.id) + " has been updated. ")
 
                 return redirect('owner')
 
