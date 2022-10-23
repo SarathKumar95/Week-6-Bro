@@ -30,7 +30,7 @@ def signup(request):
 
         else:
             print(form.errors)
-
+            messages.info(request,form.errors)
     return render(request, 'owner/signup.html', context)
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -79,12 +79,12 @@ def owner(request):
 
     return redirect('master')
 
-
+@cache_control(no_cache = True, must_revaliate=True, no_store=True)
 def create_user(request):
     if 'superuser' not in request.session:
         return redirect('master')
 
-    form = CustomUserCreationForm
+    form = CustomUserCreationForm()
     context = {'form': form}
 
     if request.method == 'POST':
@@ -97,11 +97,12 @@ def create_user(request):
 
         else:
             print(form.errors)
+            messages.error(request, form.errors)
 
     return render(request, 'owner/create.html', context)
 
 
-
+@cache_control(no_cache=True,no_store=True)
 def delete_user(request, id):
 
     if 'superuser' in request.session:
@@ -149,23 +150,37 @@ def search_user(request):
     else:
         return redirect(owner)
 
-
+@cache_control(no_cache=True,no_store=True)
 def update_user(request, id):
     if 'superuser' in request.session:
-
-
         user = CustomUser.objects.get(id=id)
         form = CustomUserChangeForm(instance=user)
 
-        print("Hehe" + str(user))
+        old_username = user
+        old_email = user.email
 
         if request.method == 'POST':
+
+
             form = CustomUserChangeForm(request.POST, instance=user)
             if form.is_valid():
+                print("Old username in post is ", old_username)
+                print("Old email in post is ", old_email)
+                new_username = request.POST['username']
+                new_email = request.POST['email']
+                print("new username is ",new_username,"and new email is",new_email)
+
                 form.save()
                 print("Updated")
-                messages.success(request,"The user with user id " + str(user.id) + " is updated.")
+
+                messages.info(request,'User with user id ' + str(user.id) + " has been updated.")
+
                 return redirect('owner')
+
+            else:
+                print("Edit unsuccesful" + str(form.errors))
+                messages.error(request, form.errors)
+
         return render(request, 'owner/edit.html', {'form': form})
 
     else:

@@ -1,16 +1,10 @@
+signup
 
 
-    <label for="">Username : </label>
-    {{form.username}}
 
-    <label for="">Email : </label>
-    {{form.email}}
 
-    <label for="">Password : </label>
-    {{form.password1}}
+----------------------
 
-    <label for="">Confirm Password : </label>
-    {{form.password2}}
 
 
 
