@@ -38,7 +38,11 @@
 
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-lock"></i></span>
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <input class="form-control" type="password" placeholder="Password" name="password" id="id_password">
+            <span class="input-group-text" id="basic-addon3">
+                <i class="far fa-eye" id="togglePassword" style="margin:10px auto; color:black; cursor: pointer;"></i>
+            </span>
+
         </div>
 
     <div class="text-center mb-3">
@@ -55,6 +59,23 @@
 
 
 </div>
+
+<script>
+
+  console.log('Working');
+
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#id_password');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+    });
+
+</script>
 
 </body>
 </html>
